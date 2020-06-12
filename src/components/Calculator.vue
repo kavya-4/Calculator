@@ -33,6 +33,7 @@ export default {
       current: '',
       operator: null,
       operatorClicked: false,
+      sign: '',
     }
   },
   methods: {
