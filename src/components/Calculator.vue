@@ -1,5 +1,6 @@
 <template>
   <div class ="calculator">
+    <div class="prev">{{ previous || '' }} {{ sign }}</div>
     <div class="display">{{current || '0'}}</div>
     <div @click="clear" class="btn operator">C</div>
     <div @click="del" class="btn operator">Del</div>
@@ -46,12 +47,15 @@ export default {
       this.current = `${parseFloat(this.current) / 100}`
     },
     append(number) {
+      if(number == '0' && this.current == '')
+        this.current = ''
+      else {
       if (this.operatorClicked){
         this.current = '';
         this.operatorClicked = false;
       }
       this.current = `${this.current}${number}`;
-
+      }
     },
     dot() {
       if (this.current.indexOf('.') === -1) {
@@ -65,19 +69,23 @@ export default {
     divide() {
       this.operator = (a, b) => a / b;
       this.setPrevious();
+      this.sign = '/'
       
     },
     mul() {
       this.operator = (a, b) => a * b;
       this.setPrevious();
+      this.sign = '*'
     },
     sub() {
       this.operator = (a, b) => a - b;
       this.setPrevious();
+      this.sign = '-'
     },
     add() {
       this.operator = (a, b) => a + b;
       this.setPrevious();
+      this.sign = '+'
     },
     equal() {
       this.current = `${this.operator(
@@ -107,8 +115,11 @@ export default {
   grid-column: 1 / 5;
   background-color: white;
   border: 1px solid #333;
-
-
+}
+.prev {
+   grid-column: 1 / 5;
+  background-color: white;
+  border: 1px solid #333;
 }
 .zero {
   grid-column: 1 / 3;
